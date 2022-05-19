@@ -7,23 +7,23 @@
             <!-- row -->
             <div class="row">
                 <!-- LOGO -->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="header-logo">
                         <img src="img/icon.png" alt="" width="70" height="70">
                     </div>
                 </div>
-                <!-- /LOGO -->
+
+                <!-- LOGO -->
+                <div class="col-md-2">
+                    <div class="header-logo">
+=                    </div>
+                </div>
 
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
                         <form>
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
-                            </select>
-                            <input class="input" placeholder="Search here">
+                            <input class="input" placeholder="Search here" style="border-radius: 50px 0 0 50px">
                             <button class="search-btn">Search</button>
                         </form>
                     </div>
