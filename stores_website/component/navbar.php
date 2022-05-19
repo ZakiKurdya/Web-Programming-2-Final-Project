@@ -17,7 +17,7 @@
 
                 while ($row = mysqli_fetch_assoc($result)){
                   $id = $row['id'];
-                    echo '<li><a href="show_product.php?category_id='.$row['id'].'">'.$row['name'].'</a></li>';
+                    echo '<li><a href="show_category.php?category_id='.$row['id'].'">'.$row['name'].'</a></li>';
                 }
                 ?>
 

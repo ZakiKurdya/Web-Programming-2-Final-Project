@@ -1,32 +1,23 @@
 <?php
-include "DB_CONNECTION.php";
+include "util/DB_CONNECTION.php";
 $category_id = $_GET['category_id'];
-$query1 = "SELECT * from products where category_id = $category_id";
-$result1=mysqli_query($connection,$query1);
-
-
-
+$query1 = "SELECT * from store where category_id = $category_id";
+$result1 = mysqli_query($connection,$query1);
 ?>
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
+
 <?php
 include 'component/head.php';
 ?>
+
 <body>
 
 <?php
 include 'component/header.php';
 include 'component/navbar.php';
 ?>
-
-
-
 
 <!-- Section -->
 <div class="section">
@@ -37,53 +28,29 @@ include 'component/navbar.php';
 
             <div class="col-md-12">
                 <div class="section-title text-center">
-                    <h3 class="title">Related Products</h3>
+                    <h3 class="title">Related Stores</h3>
                 </div>
             </div>
 
             <?php
-            while ($product=mysqli_fetch_assoc($result1)){
-                $product_id = $product['id'];
-                $query2= "SELECT * from product_file where product_id = $product_id ";
-                $result2 =mysqli_query($connection,$query2);
-               $file= mysqli_fetch_assoc($result2);
+            while ($store = mysqli_fetch_assoc($result1)){
+                $path = "../dashboard/uploads/images/".$store['logo_image'];
                 echo '  <div class="col-md-3 col-xs-6">
                 <div class="product">
-                    <div class="product-img">
-                        <img src="http://localhost/iug/project/Dashboard/uploads/images"'.$file['image'].'" alt="">
-                        <div class="product-label">
-                            <span class="sale">-30%</span>
-                        </div>
+                    <div class="product-img">'.
+                       '<img src="'.$path.'" alt='.$store['name'].'>
                     </div>
                     <div class="product-body">
                         <p class="product-category">Category</p>
-                        <h3 class="product-name"><a href="#">'.$product['name'].'</a></h3>
-                        <h4 class="product-price">'.$product['price'].'<del class="product-old-price">'.$product['first_price'].'</del></h4>
-                        <div class="product-rating">
-                        </div>
+                        <h3 class="product-name"><a href="#">'.$store['name'].'</a></h3>
                         <div class="product-btns">
-                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                             <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                         </div>
                     </div>
-                    <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                    </div>
                 </div>
             </div>';
-
             }
             ?>
-            <!-- product -->
-
-            <!-- /product -->
-
-
-
-
-
-
 
         </div>
         <!-- /row -->
