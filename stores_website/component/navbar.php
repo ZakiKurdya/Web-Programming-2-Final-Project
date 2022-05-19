@@ -7,20 +7,19 @@
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
+
                 <?php
-                include_once 'DB_CONNECTION.php';
+                include_once 'util/DB_CONNECTION.php';
 
-                $query = "SELECT * from categories";
+                $query = "SELECT * from category";
 
-               $result= mysqli_query($connection,$query);
+                $result= mysqli_query($connection,$query);
 
                 while ($row = mysqli_fetch_assoc($result)){
                   $id = $row['id'];
                     echo '<li><a href="show_product.php?category_id='.$row['id'].'">'.$row['name'].'</a></li>';
                 }
                 ?>
-
-
 
             </ul>
             <!-- /NAV -->
