@@ -16,13 +16,13 @@ $result1=mysqli_query($connection,$query1);
 <!DOCTYPE html>
 <html lang="en">
 <?php
-include 'partial/head.php';
+include 'component/head.php';
 ?>
 <body>
 
 <?php
-include 'partial/header.php';
-include 'partial/navbar.php';
+include 'component/header.php';
+include 'component/navbar.php';
 ?>
 
 
@@ -129,7 +129,7 @@ include 'partial/navbar.php';
 <!-- /NEWSLETTER -->
 
 <?php
-include "partial/footer.php";
+include "component/footer.php";
 ?>
 
 </body>

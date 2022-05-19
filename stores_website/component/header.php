@@ -9,7 +9,7 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <img src="img/icon.png" alt="" width="80" height="80">
+                        <img src="img/icon.png" alt="" width="70" height="70">
                     </div>
                 </div>
                 <!-- /LOGO -->
