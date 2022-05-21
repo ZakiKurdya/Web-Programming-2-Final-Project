@@ -57,7 +57,7 @@ include "component/navbar.php";
             <div class="col-md-4 col-md-push-2">
                 <div id="product-main-img">
                     <div class="product-preview">
-                        <img src="img/icon.png" alt="">
+                        <img src="../dashboard/uploads/images/<?php echo $store_data['logo_image']?>" alt="Missing photo">
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@ include "component/navbar.php";
             <!-- Product details -->
             <div class="col-md-5">
                 <div class="product-details">
-                    <h2 class="product-name">Canon</h2>
+                    <h2 class="product-name"><?php echo $store_data['name']?></h2>
                     <div>
                         <div class="product-rating">
                             <i class="fa fa-star"></i>
@@ -83,13 +83,14 @@ include "component/navbar.php";
 
                     <br>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <p><?php echo $store_data['description']?></p>
 
-                    <ul class="product-links">
-                        <li>Category:</li>
-                        <li><a href="#">Headphones</a></li>
-                    </ul>
-
+                    <div class="col-md-6">
+                        <ul class="breadcrumb-tree">
+                            <li><a href="show_category.php?category_id=<?php echo $store_data['category_id']?>"><?php echo $categories['name']?></a></li>
+                            <li class="active"><?php echo $store_data['name']?></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <!-- /Product details -->
