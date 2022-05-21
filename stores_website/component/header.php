@@ -22,8 +22,8 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
-                            <input class="input" placeholder="Search here" style="border-radius: 50px 0 0 50px">
+                        <form action="index.php" method="post">
+                            <input class="input" placeholder="Search here" style="border-radius: 50px 0 0 50px" name="store_name">
                             <button class="search-btn">Search</button>
                         </form>
                     </div>
