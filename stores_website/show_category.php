@@ -19,6 +19,7 @@ include 'component/header.php';
 include 'component/navbar.php';
 ?>
 
+
 <!-- Section -->
 <div class="section">
     <!-- container -->
@@ -35,17 +36,21 @@ include 'component/navbar.php';
             <?php
             while ($store = mysqli_fetch_assoc($result1)){
                 $path = "../dashboard/uploads/images/".$store['logo_image'];
-                echo '  <div class="col-md-3 col-xs-6">
+                echo '  <div class="col-md-3 col-xs-6" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
                 <div class="product">
-                    <div class="product-img">'.
+                    <div class="product-img">' .
                        '<img src="'.$path.'" alt='.$store['name'].'>
                     </div>
                     <div class="product-body">
                         <p class="product-category">Category</p>
-                        <h3 class="product-name"><a href="#">'.$store['name'].'</a></h3>
+                        <h3 class="product-name"><a href="#">'.$store['name'].'</a></h3>';
+                   
+                   echo '<form action="product_page.php?id='.$store['id'].'>';
+                  echo ' <input type="hidden" name="pro_id" value="" />
                         <div class="product-btns">
-                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                            <button class="quick-view" ><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>';
