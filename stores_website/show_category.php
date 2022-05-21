@@ -39,21 +39,21 @@ include 'component/navbar.php';
                 echo '  <div class="col-md-3 col-xs-6" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
                 <div class="product">
                     <div class="product-img">' .
-                       '<img src="'.$path.'" alt='.$store['name'].'>
+                       '<img src="'.$path.'" alt='.$store['name'].' width="300px" height="250px">
                     </div>
                     <div class="product-body">
-                        <p class="product-category">Category</p>
+                        <p class="product-category">Store</p>
                         <h3 class="product-name"><a href="#">'.$store['name'].'</a></h3>';
-                   
-                   echo '<form action="product_page.php?id='.$store['id'].'>';
-                  echo ' <input type="hidden" name="pro_id" value="" />
-                        <div class="product-btns">
-                            <button class="quick-view" ><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+
+                   echo '<form action="store_page.php" method="post">';
+                  echo "<input type='hidden' name='store_id' value='" . $store['id'] . "'/>
+                        <div class='product-btns'>
+                            <button class='quick-view' ><i class='fa fa-eye'></i><span class='tooltipp'>quick view</span></button>
                         </div>
                         </form>
                     </div>
                 </div>
-            </div>';
+            </div>";
             }
             ?>
 
