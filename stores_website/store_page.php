@@ -1,5 +1,7 @@
 <?php
 include_once "util/DB_CONNECTION.php";
+session_start();
+
 if (isset($_POST['store_id'])) {
     $store_id = $_POST['store_id'];
 } else if (isset($_GET['store_id'])) {
@@ -13,6 +15,18 @@ $store_data = mysqli_fetch_assoc($result);
 $getCategory = "SELECT * FROM category WHERE id =".$store_data['category_id'];
 $result1 = mysqli_query($connection, $getCategory);
 $categories = mysqli_fetch_assoc($result1);
+
+if (isset($_POST['rating'])) {
+    if (!isset($_SESSION["'".$store_data['name']."'"])) {
+        $_SESSION["'".$store_data['name']."'"] = true;
+        $increment_query = "INSERT INTO rating (rating, store_id) VALUES (".$_POST['rating'].",".$_POST['store_id'].")";
+        mysqli_query($connection, $increment_query);
+    }
+}
+
+$select_query = "SELECT AVG(rating) AS rating FROM rating WHERE store_id = $store_id";
+$avg_result = mysqli_query($connection, $select_query);
+$avg_rating = intval(mysqli_fetch_assoc($avg_result)['rating']);
 ?>
 
 <!DOCTYPE html>
@@ -73,11 +87,14 @@ include "component/navbar.php";
                     <h2 class="product-name"><?php echo $store_data['name']?></h2>
                     <div>
                         <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
+                            <?php
+                            for ($i=1; $i<=$avg_rating; $i++) {
+                                echo ' <i class="fa fa-star"></i> ';
+                            }
+                            for ($i=1; $i<= 5-$avg_rating; $i++) {
+                                echo ' <i class="fa fa-star-o"></i> ';
+                            }
+                            ?>
                         </div>
                     </div>
 
@@ -85,12 +102,10 @@ include "component/navbar.php";
 
                     <p><?php echo $store_data['description']?></p>
 
-                    <div class="col-md-6">
-                        <ul class="breadcrumb-tree">
-                            <li><a href="show_category.php?category_id=<?php echo $store_data['category_id']?>"><?php echo $categories['name']?></a></li>
-                            <li class="active"><?php echo $store_data['name']?></li>
-                        </ul>
-                    </div>
+                    <ul class="product-links">
+                        <li>Category:</li>
+                        <li><a href="show_category.php?category_id=<?php echo $store_data['category_id']?>"><?php echo $categories['name']?></a></li>
+                    </ul>
                 </div>
             </div>
             <!-- /Product details -->
@@ -109,94 +124,13 @@ include "component/navbar.php";
                         <!-- tab3  -->
                         <div id="tab3" class="tab-pane fade in active">
                             <div class="row">
-                                <!-- Rating -->
-                                <div class="col-md-5">
-                                    <div id="rating">
-                                        <div class="rating-avg">
-                                            <span>4.5</span>
-                                            <div class="rating-stars">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                        </div>
-                                        <ul class="rating">
-                                            <li>
-                                                <div class="rating-stars">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="rating-progress">
-                                                    <div style="width: 80%;"></div>
-                                                </div>
-                                                <span class="sum">3</span>
-                                            </li>
-                                            <li>
-                                                <div class="rating-stars">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </div>
-                                                <div class="rating-progress">
-                                                    <div style="width: 60%;"></div>
-                                                </div>
-                                                <span class="sum">2</span>
-                                            </li>
-                                            <li>
-                                                <div class="rating-stars">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </div>
-                                                <div class="rating-progress">
-                                                    <div></div>
-                                                </div>
-                                                <span class="sum">0</span>
-                                            </li>
-                                            <li>
-                                                <div class="rating-stars">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </div>
-                                                <div class="rating-progress">
-                                                    <div></div>
-                                                </div>
-                                                <span class="sum">0</span>
-                                            </li>
-                                            <li>
-                                                <div class="rating-stars">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </div>
-                                                <div class="rating-progress">
-                                                    <div></div>
-                                                </div>
-                                                <span class="sum">0</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- /Rating -->
+                                <div class="col-md-4"></div>
 
                                 <!-- Review Form -->
-                                <div class="col-md-3">
+                                <div class="col-md-4" style="text-align: center">
                                     <div id="review-form">
-                                        <form class="review-form">
+                                        <form class="review-form" action="store_page.php" method="post">
+                                            <input type="hidden" name="store_id" value="<?php echo $store_id?>">
                                             <div class="input-rating">
                                                 <span>Your Rating: </span>
                                                 <div class="stars">
@@ -264,7 +198,6 @@ include "component/navbar.php";
 <!-- /NEWSLETTER -->
 
 <?php
-
 include "component/footer.php";
 ?>
 
