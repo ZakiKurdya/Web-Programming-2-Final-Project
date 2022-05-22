@@ -49,7 +49,7 @@ include "../components/sidebar.php";
                                                                     <table style="width: 100%"  class="table display nowrap table-striped table-bordered scroll-horizontal ">
                                                                         <thead>
                                                                         <tr>
-                                                                            <th>Market ID</th>
+                                                                            <th>Store</th>
                                                                             <th>Overall Rating</th>
                                                                             <th>Number of Ratings</th>
                                                                         </tr>
@@ -59,16 +59,21 @@ include "../components/sidebar.php";
                                                                         <?php
                                                                         include_once "../components/DB_CONNECTION.php";
                                                                         $limit = 3;
-                                                                        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                                                        $page = $_GET['page'] ?? 1;
                                                                         $offset = ($page - 1) * $limit;
-                                                                        $query = "select * from rating limit $limit offset $offset";
-
+                                                                        $query = "select store_id, AVG(rating) AS overall_rating, COUNT(rating) AS rating_no
+                                                                                  from rating GROUP BY store_id  limit ".$limit." offset ".$offset;
                                                                         $result = mysqli_query($connection, $query);
+
                                                                         if (mysqli_num_rows($result) > 0) {
                                                                             while ($row = mysqli_fetch_assoc($result)) {
+                                                                                $find_store_name = "SELECT name FROM store where id = ".$row['store_id'];
+                                                                                $query_result = mysqli_query($connection, $find_store_name);
+                                                                                $store_name = mysqli_fetch_assoc($query_result)['name'];
+
                                                                                 echo "<tr>" .
-                                                                                     "<td>" . $row['store_id'] . "</td>" .
-                                                                                     "<td>" . $row['overall_rating'] . "</td>" .
+                                                                                     "<td>" . $store_name . "</td>" .
+                                                                                     "<td>" . intval($row['overall_rating']) . "</td>" .
                                                                                      "<td>" . $row['rating_no'] . "</td> </tr>";
                                                                             }
                                                                         }
@@ -94,7 +99,7 @@ include "../components/sidebar.php";
 
             <div class="col-md-12" style="margin: auto; width: 300px">
                 <?php
-                $query = "SELECT count(id) as row_no from rating";
+                $query = "SELECT count(distinct store_id) as row_no from rating";
                 $result = mysqli_query($connection, $query);
                 $row = mysqli_fetch_assoc($result);
                 $page_count = ceil($row['row_no'] / $limit);
