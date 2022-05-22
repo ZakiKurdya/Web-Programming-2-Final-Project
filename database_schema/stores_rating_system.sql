@@ -39,8 +39,7 @@ CREATE TABLE store
 CREATE TABLE rating
 (
     id             int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    overall_rating int(11) NOT NULL,
-    rating_no      int(11) NOT NULL,
+    rating         int(11) NOT NULL,
     store_id       int(11) NOT NULL,
     FOREIGN KEY (store_id) REFERENCES store(id)
 );
