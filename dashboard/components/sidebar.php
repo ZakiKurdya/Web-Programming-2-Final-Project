@@ -68,7 +68,7 @@
                     <span class="badge badge-pill badge-danger   float-right  mr-2">
                         <?php
                         include_once "../components/DB_CONNECTION.php";
-                        $query = "select * from rating";
+                        $query = "select distinct store_id from rating";
                         $result = mysqli_query($connection, $query);
                         echo mysqli_num_rows($result);
                         ?>
